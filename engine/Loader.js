@@ -25,7 +25,14 @@
         addJson(name,adress){
             this.loadOrder.jsons.push({name,adress})
         }
-
+        getImage(name) {
+            
+                return this.resources.images[name]
+            
+        }
+        getJson(name){
+            return this.resources.jsons[name]
+            }
         /* Promise, что все файлы загрузились на клиент */
         load(callback) {
             
@@ -76,7 +83,7 @@
                    }
                })
                /* Добавляем удачный Promise в массив Promise'ов */
-               promises.push(promise)
+                promises.push(promise)
 
                
            }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,45 +12,96 @@
     <!-- 3)Rendering -->
 
     <!--//Подключаемые скрипты-->
+    <script src="engine/Container.js"></script>
     <script src="engine/Loader.js"></script>
+    <script src="engine/Renderer.js"></script>
+    <script src="engine/Sprite.js"></script>
+
+    
     <!--Подключаемые скрипты\\-->
 
     <!-- //Исполняемый скрипт  -->
     <script >
 
 
-        const {Loader} = GameEngine
+        const {Loader, Renderer, Sprite, Container} = GameEngine
+         
+        let sprite = null
 
         const loader = new Loader
+        const renderer = new Renderer({
+                                width:500,
+                                height:500,
+                                background:'gray',
+            update(timestamp){
+                if(!sprite){return}
+                sprite.x = renderer.canvas.width/2  -50*Math.cos(timestamp/100)
+                sprite.y = renderer.canvas.height/2 -50*Math.sin(timestamp/100)
+                
+                sprite1.x += 1
+                sprite1.y += 1
+                
+                
+                // sprite.x = renderer.canvas.width/2  -50*Math.cos(timestamp/100)
+                // sprite.y = renderer.canvas.height/2 -50*Math.sin(timestamp/100)
+                
+            }
 
+        })
+
+        document.body.append(renderer.canvas)
+
+        //добавление фойлов в очередь на загрузку
         loader.addImage('fireskull','static/fireskull.jpg')
         loader.addImage('tanks','static/Tankbatt.png')
+        loader.addImage('animal','static/animal.jpg')
         loader.addJson('persons','static/persons.json')
 
-
+        //Загрузка файлов в клиент
         loader.load(()=>{
-            console.log('Images loading finished');
+            
+            sprite = new Sprite(loader.getImage('animal'),{
+               scale:0.25,
+               anchorX:-0.5,
+               anchorY:-0.2
+               
+
+               
+                // x:0,
+                // y:0,
+                // width:100,
+                // height:100
+            })
+            sprite1 = new Sprite(loader.getImage('tanks'),{
+               scale:0.5,
+                anchorX:-1.5,
+                anchorY:-1.5
+               
+
+               
+                // x:0,
+                // y:0,
+                // width:100,
+                // height:100
+            })
+
+            // const container = new Container()
+            // renderer.stage.add(container)
+            // container.add(sprite)
+
+
+            renderer.stage.add(sprite)
+            renderer.stage.add(sprite1)
+            
+            // sprite.absoluteX = 0
+            // sprite.absoluteY = 0
         })
 
 
 
 
 
-        Loader
-            .loadImage('static/fireskull.jpg')
-            .then(image => {
-                document.body.append(image)
-                console.log(image)
-
-             })
-             Loader
-            .loadImage('static/Tankbatt.png')
-            .then(image => {
-                document.body.append(image)
-                console.log(image)
-
-             })
-    
+        
     </script>
     <!-- Исполняемый скрипт\\  -->
 

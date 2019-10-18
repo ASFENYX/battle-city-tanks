@@ -1,8 +1,11 @@
 ;(function() {
     'use strict'
 
-    class Container{
-        constructor(){
+    class Container extends GameEngine.DisplayObject{
+        constructor(args = {}){
+            super(args)
+
+
             this.displayObjects = []
 
         }

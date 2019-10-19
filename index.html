@@ -29,26 +29,38 @@
         const {Loader, Renderer, Sprite, Container} = GameEngine
          
         let sprite = null
-        let sprite1100 = null
+        let sprite1 = null
+        let sprite2 = null
 
         let container = null
+        let container1 = null
 
         const loader = new Loader
         const renderer = new Renderer({
                                 width:500,
                                 height:500,
-                                background:'gray',
+                                background:'black',
             update(timestamp){
                 if(!sprite || !sprite1){return}
-                // sprite.x = renderer.canvas.width/2  -50*Math.cos(timestamp/100)
-                // sprite.y = renderer.canvas.height/2 -50*Math.sin(timestamp/100)
+                sprite.x = renderer.canvas.width/2  -Math.cos(timestamp/1000)
+                sprite.y = renderer.canvas.height/2 -Math.sin(timestamp/1000)
+                sprite.rotation = timestamp/100*0.0174533
                 
-                // sprite.rotation = timestamp/1000
-                // sprite1.rotation = -timestamp/1000
-                // container.rotation = -timestamp/1000
-                // sprite1.x += 1
+                
+                
+                // sprite1.x = renderer.canvas.width/2  -150*Math.cos(timestamp/1000)
+                // sprite1.y = renderer.canvas.height/2 -150*Math.sin(timestamp/1000)
+                sprite1.rotation = -timestamp/10*0.0174533
                 // sprite1.y += 1
-                
+                //  context.beginPath()
+                //  context.fillStyle = 'green'
+                //  context.arc(container.anchorX,container.anchorY,50,0,Math.PI/4)
+                //  context.fill()
+                //  context.closePath()
+
+                //container1.rotation = renderer.canvas.width/2  -150*Math.cos(timestamp/10000)
+                container1.x = renderer.canvas.width/2  -150*Math.cos(timestamp/1000)
+                container1.y = renderer.canvas.height/2  -150*Math.cos(timestamp/1000)
                 
                 // sprite.x = renderer.canvas.width/2  -50*Math.cos(timestamp/100)
                 // sprite.y = renderer.canvas.height/2 -50*Math.sin(timestamp/100)
@@ -61,14 +73,17 @@
 
         //добавление фойлов в очередь на загрузку
         loader.addImage('fireskull','static/fireskull.jpg')
-        loader.addImage('tanks','static/Tankbatt.png')
+        loader.addImage('earth','static/earth.png')
         loader.addImage('animal','static/animal.jpg')
+        loader.addImage('sun','static/sun2.png')
+
+
         loader.addJson('persons','static/persons.json')
 
         //Загрузка файлов в клиент
         loader.load(()=>{
             
-            sprite = new Sprite(loader.getImage('animal'),{
+            sprite = new Sprite(loader.getImage('sun'),{
                scale:0.25,
                anchorX:0.5,
                anchorY:0.5,
@@ -82,13 +97,13 @@
                 // width:100,
                 // height:100
             })
-            sprite1 = new Sprite(loader.getImage('animal'),{
+            sprite1 = new Sprite(loader.getImage('earth'),{
                scale:0.25,
                anchorX:0.5,
                anchorY:0.5,
             //    rotation :  Math.PI/2 ,
-                x:350,
-                y:200,
+                //x:350,
+                //y:200,
                 // anchorX:-1.5,
                 // anchorY:-1.5
                 // x:0,
@@ -108,12 +123,18 @@
              container.width = renderer.canvas.width
              container.height = renderer.canvas.height
 
-             
+              container1 = new Container()
+            //   container.anchorX=0.5
+            //  container.anchorY=0.5
+            container.width = 472
+             container.height = 472
+
 
 
             renderer.stage.add(container)
             container.add(sprite)
-            container.add(sprite1)
+            container.add(container1)
+            container1.add(sprite1)
             //container.add(sprite1)
 
 
